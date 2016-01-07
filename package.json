@@ -1,0 +1,8 @@
+{
+  "name": "osb-geo-weather",
+  "version": "0.0.1",
+  "dependencies": {
+    "babel": "^6.3.26",
+    "webcomponents.js": "^0.7.20"
+  }
+}
