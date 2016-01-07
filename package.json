@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "babel": "^6.3.26",
+    "grunt-cli": "^0.1.13",
     "webcomponents.js": "^0.7.20"
   }
 }
