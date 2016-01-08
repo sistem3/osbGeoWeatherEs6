@@ -3,7 +3,7 @@
 (function() {
     let template = `
         <style>
-            @import url('http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700');
+            @import url('https://fonts.googleapis.com/css?family=Raleway:400,300,500');
             @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
             @import url('/bower_components/weather-icons/css/weather-icons.css');
 
@@ -21,7 +21,7 @@
             .osb-geo-weather-holder h3,
             .osb-geo-weather-holder h4,
             .osb-geo-weather-holder p {
-                font-family: 'Roboto Condensed', sans-serif;
+                font-family: 'Raleway', sans-serif;
                 color: #FFF;
             }
 
@@ -31,9 +31,28 @@
                 z-index: 2;
             }
 
+            .osb-geo-weather-holder h3 {
+                margin-bottom: 0;
+            }
+
+            .osb-geo-weather-holder h4 {
+                margin-top: 10px;
+            }
+
             .osb-geo-weather-holder .today-weather,
             .osb-geo-weather-holder .location {
                 text-transform: capitalize;
+            }
+
+            .osb-geo-weather-holder .forecast-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .osb-geo-weather-holder .forecast-list li {
+                width: 25%;
+                display: inline-block;
             }
 
             .osb-geo-weather-holder .background {
@@ -67,7 +86,7 @@
                     <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>
                 </article>
                 <article>
-                    <h3>Weather Forecast</h3>
+                    <h3>Weather Forecast <i class="fa fa-calendar"></i> <i class="fa fa-chevron-up"></i></h3>
                     <ul class="forecast-list"></ul>
                 </article>
             </section>
@@ -89,32 +108,39 @@
             this.$holder = this.shadowRoot.querySelector('.osb-geo-weather-holder');
             this.$loader = this.shadowRoot.querySelector('.weather-loader');
             this.$location = this.shadowRoot.querySelector('.location span');
+
             this.$todayWeather = this.shadowRoot.querySelector('.today-weather span');
             this.$todayWeatherIcon = this.shadowRoot.querySelector('.today-weather i');
             this.$todayTemp = this.shadowRoot.querySelector('.today-weather .temp');
             this.$todayHighLow = this.shadowRoot.querySelector('.today-high-low');
+
+            this.$forecastListHolder = this.shadowRoot.querySelector('.forecast-list');
+
             this.getLocation();
         };
 
         attachedCallback() {};
 
         attributeChangedCallback(attrName, oldVal, newVal) {
-            console.log(attrName);
+            //console.log(attrName);
             if (attrName === 'location') {
                 this.getTodayWeather(newVal);
             } else if (attrName === 'weather') {
                 if (this.getAttribute('show-forecast')) {
-                    console.log('show forecast');
+                    //console.log('show forecast');
                     var location = this.getAttribute('location');
                     this.getWeatherForecast(location);
                 }
 
                 var weatherData = JSON.parse(newVal);
-                this.updateTemplate(weatherData);
+                this.updateWeatherTemplate(weatherData);
+            } else if (attrName === 'forecast') {
+                var forecastData = JSON.parse(newVal);
+                this.updateForecastTemplate(forecastData);
             }
         };
 
-        updateTemplate(data) {
+        updateWeatherTemplate(data) {
             console.log(data);
             this.$location.innerHTML = data.name;
             this.$todayWeather.innerHTML = data.weather[0].description;
@@ -124,10 +150,25 @@
             this.$todayHighLow.querySelector('.high').innerHTML = data.main.temp_max;
             this.$todayHighLow.querySelector('.low').innerHTML = data.main.temp_min;
         };
+
+        updateForecastTemplate(data) {
+            console.log(data);
+            var templateHolder = this.$forecastListHolder;
+            data.list.forEach(function(element, index, array) {
+                var date = new Date(element.dt);
+                templateHolder.innerHTML +=
+                    '<li><h3>' +
+                    date.toDateString().slice(0, 3) + ' ' +
+                    date.getDate() + ' ' +
+                    date.toDateString().slice(4, 7) + '</h3><h4>' +
+                    element.weather[0].description + ' <i class="' +
+                    osbGeoWeather.prototype.getWeatherIcon(element.weather[0].description) + '"></i></h4></li>';
+            });
+        };
         // Get location from device or default then get long/lat from Google Maps
         getLocation() {
             if ('geolocation' in navigator) {
-                console.log('Has geolocation');
+                //console.log('Has geolocation');
                 // Get Location from Google if available else use default
                 var base, apiKey, holder;
                 base = this.googleMapsApiBase;
@@ -136,7 +177,7 @@
                 navigator.geolocation.getCurrentPosition(function(position) {
                     fetch(base + position.coords.latitude + ',' + position.coords.longitude + '&key=' + apiKey)
                         .then(function(response) {
-                            console.log('Location Success');
+                            //console.log('Location Success');
                             if (response.status !== 200) {
                                 console.log('Looks like there was a problem. Status Code: ' + response.status);
                                 return;
@@ -156,11 +197,11 @@
         };
         // Get Today's weather from openWeatherApi
         getTodayWeather(location) {
-            console.log('Getting todays weather');
+            //console.log('Getting today's weather');
             var holder = this;
             fetch(this.weatherApiBase + 'weather?q=' + location + '&units=metric&APPID=' + this.weatherApiKey)
                 .then(function(response) {
-                    console.log('Weather Success');
+                    //console.log('Weather Success');
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         return;
@@ -179,7 +220,7 @@
             var holder = this;
             fetch(this.weatherApiBase + 'forecast/daily?q=' + location + '&units=metric&APPID=' + this.weatherApiKey)
                 .then(function(response) {
-                    console.log('Weather forecast Success');
+                    //console.log('Weather forecast Success');
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         return;
