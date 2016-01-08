@@ -1,0 +1,30 @@
+.osb-geo-weather-holder {
+  .forecast-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .forecast-list li {
+    width: 25%;
+    display: inline-block;
+    text-transform: capitalize;
+
+    @media (max-width: 380px) {
+      width: 100%;
+    }
+
+    @media (min-width: 380px) and (max-width: 650px) {
+      width: 50%;
+    }
+
+    @media (min-width: 651px) and (max-width: 990px) {
+      width: 33.33333%;
+    }
+  }
+
+  .forecast-list li:last-child {
+    border-right: 0;
+    border-bottom: 0;
+  }
+}

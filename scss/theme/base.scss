@@ -1,0 +1,10 @@
+.osb-geo-weather-holder {
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+
+  .weather {
+    position: relative;
+    z-index: 2;
+  }
+}
