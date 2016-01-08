@@ -7,96 +7,7 @@
             @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
             @import url('/bower_components/weather-icons/css/weather-icons.css');
 
-            .osb-geo-weather-holder {
-                padding: 20px;
-                position: relative;
-                box-sizing: border-box;
-            }
-            
-            .osb-geo-weather-holder .weather {
-                position: relative;
-                z-index: 2;
-            }
-
-            .osb-geo-weather-holder h2,
-            .osb-geo-weather-holder h3,
-            .osb-geo-weather-holder h4,
-            .osb-geo-weather-holder p {
-                font-family: 'Roboto', sans-serif;
-                font-weight: 300;
-                color: #FFF;
-            }
-
-            .osb-geo-weather-holder h2 {
-                margin-top: 0;
-                position: relative;
-                z-index: 2;
-            }
-
-            .osb-geo-weather-holder h3 {
-                margin-bottom: 0;
-            }
-
-            .osb-geo-weather-holder h4 {
-                margin-top: 10px;
-            }
-
-            .osb-geo-weather-holder .today-weather,
-            .osb-geo-weather-holder .location {
-                text-transform: capitalize;
-            }
-
-            .osb-geo-weather-holder .forecast-list {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .osb-geo-weather-holder .forecast-list li {
-                width: 25%;
-                display: inline-block;
-                text-transform: capitalize;
-            }
-
-            .osb-geo-weather-holder .forecast-list li:last-child {
-                border-right: 0;
-                border-bottom: 0;
-            }
-
-            .osb-geo-weather-holder .background {
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                position: absolute;
-                top: 0;
-                left: 0;
-                background: #000016;
-                background: -moz-linear-gradient(top,#000016 0,#002156 100%);
-                background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#000016),color-stop(100%,#002156));
-                background: -webkit-linear-gradient(top,#000016 0,#002156 100%);
-                background: -o-linear-gradient(top,#000016 0,#002156 100%);
-                background: -ms-linear-gradient(top,#000016 0,#002156 100%);
-                background: linear-gradient(to bottom,#000016 0,#002156 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000016', endColorstr='#002156', GradientType=0);
-            }
-
-            @media (max-width: 380px) {
-                .osb-geo-weather-holder .forecast-list li {
-                    width: 100%;
-                }
-            }
-
-            @media (min-width: 380px) and (max-width: 650px) {
-                .osb-geo-weather-holder .forecast-list li {
-                    width: 50%;
-                }
-            }
-
-            @media (min-width: 651px) and (max-width: 990px) {
-                .osb-geo-weather-holder .forecast-list li {
-                    width: 33.33333%;
-                }
-            }
+            @import url('/css/osb-geo-weather.css');
         </style>
         <main class="osb-geo-weather-holder">
             <h2>Local Weather <i class="fa fa-refresh"></i></h2>
@@ -110,6 +21,10 @@
                         <i class="fa fa-chevron-down"></i> Low: <span class="low"></span><sup>&deg;</sup>
                     </h4>
                     <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>
+                    <p class="sunrise-sunset">
+                        <i class="wi wi-sunrise"></i> Sunrise: <span class="sunrise"></span> |
+                        <i class="wi wi-sunset"></i> Sunset: <span class="sunset"></span>
+                    </p>
                 </article>
                 <article>
                     <h3><i class="fa fa-calendar"></i> Weather Forecast <i class="fa fa-chevron-up"></i></h3>
