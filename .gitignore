@@ -4,3 +4,7 @@
 .idea/osb-geo-weather.iml
 .idea/workspace.xml
 /bower_components
+babel
+babel-external-helpers
+babel-node
+package.json
