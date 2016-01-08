@@ -29,7 +29,7 @@
   /* IE10+ */
   background: linear-gradient(to bottom, #00b7ea 0%, #0074b2 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00b7ea', endColorstr='#0074b2', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$cerulean', endColorstr='#0074b2', GradientType=0);
   /* IE6-9 */ }
 
 .osb-geo-weather-holder .nightBg {
