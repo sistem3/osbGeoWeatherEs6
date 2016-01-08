@@ -1,3 +1,5 @@
+"use strict";
+
 (function() {
     let template = `
         <style>
@@ -92,7 +94,7 @@
                     <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>
                 </article>
                 <article>
-                    <h3>Weather Forecast <i class="fa fa-calendar"></i> <i class="fa fa-chevron-up"></i></h3>
+                    <h3><i class="fa fa-calendar"></i> Weather Forecast <i class="fa fa-chevron-up"></i></h3>
                     <ul class="forecast-list"></ul>
                 </article>
             </section>
