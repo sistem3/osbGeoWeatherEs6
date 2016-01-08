@@ -79,6 +79,24 @@
                 background: linear-gradient(to bottom,#000016 0,#002156 100%);
                 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000016', endColorstr='#002156', GradientType=0);
             }
+
+            @media (max-width: 380px) {
+                .osb-geo-weather-holder .forecast-list li {
+                    width: 100%;
+                }
+            }
+
+            @media (min-width: 380px) and (max-width: 650px) {
+                .osb-geo-weather-holder .forecast-list li {
+                    width: 50%;
+                }
+            }
+
+            @media (min-width: 651px) and (max-width: 990px) {
+                .osb-geo-weather-holder .forecast-list li {
+                    width: 33.33333%;
+                }
+            }
         </style>
         <main class="osb-geo-weather-holder">
             <h2>Local Weather <i class="fa fa-refresh"></i></h2>
