@@ -1,15 +1,14 @@
-"use strict";
-
 (function() {
     let template = `
         <style>
-            @import url('https://fonts.googleapis.com/css?family=Raleway:400,300,500');
+            @import url('https://fonts.googleapis.com/css?family=Roboto:400,300');
             @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
             @import url('/bower_components/weather-icons/css/weather-icons.css');
 
             .osb-geo-weather-holder {
                 padding: 20px;
                 position: relative;
+                box-sizing: border-box;
             }
             
             .osb-geo-weather-holder .weather {
@@ -21,7 +20,8 @@
             .osb-geo-weather-holder h3,
             .osb-geo-weather-holder h4,
             .osb-geo-weather-holder p {
-                font-family: 'Raleway', sans-serif;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 300;
                 color: #FFF;
             }
 
@@ -53,6 +53,12 @@
             .osb-geo-weather-holder .forecast-list li {
                 width: 25%;
                 display: inline-block;
+                text-transform: capitalize;
+            }
+
+            .osb-geo-weather-holder .forecast-list li:last-child {
+                border-right: 0;
+                border-bottom: 0;
             }
 
             .osb-geo-weather-holder .background {
@@ -80,8 +86,8 @@
                         <span></span> <i></i> <span class="temp"></span><sup>&deg;</sup>
                     </h3>
                     <h4 class="today-high-low">
-                        High <i class="fa fa-chevron-up"></i>: <span class="high"></span><sup>&deg;</sup> |
-                        Low <i class="fa fa-chevron-down"></i>: <span class="low"></span><sup>&deg;</sup>
+                        <i class="fa fa-chevron-up"></i> High: <span class="high"></span><sup>&deg;</sup> |
+                        <i class="fa fa-chevron-down"></i> Low: <span class="low"></span><sup>&deg;</sup>
                     </h4>
                     <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>
                 </article>
