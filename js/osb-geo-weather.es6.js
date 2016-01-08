@@ -4,45 +4,78 @@
     let template = `
         <style>
             @import url('http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700');
+            @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
+            @import url('/bower_components/weather-icons/css/weather-icons.css');
+
+            .osb-geo-weather-holder {
+                padding: 20px;
+                position: relative;
+            }
+            
+            .osb-geo-weather-holder .weather {
+                position: relative;
+                z-index: 2;
+            }
 
             .osb-geo-weather-holder h2,
             .osb-geo-weather-holder h3,
+            .osb-geo-weather-holder h4,
             .osb-geo-weather-holder p {
                 font-family: 'Roboto Condensed', sans-serif;
+                color: #FFF;
             }
 
             .osb-geo-weather-holder h2 {
                 margin-top: 0;
-            }
-
-            .osb-geo-weather-holder {
-                padding: 10px;
+                position: relative;
+                z-index: 2;
             }
 
             .osb-geo-weather-holder .today-weather,
-            .osb-geo-weather-holder .location
-             {
+            .osb-geo-weather-holder .location {
                 text-transform: capitalize;
+            }
+
+            .osb-geo-weather-holder .background {
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: #000016;
+                background: -moz-linear-gradient(top,#000016 0,#002156 100%);
+                background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#000016),color-stop(100%,#002156));
+                background: -webkit-linear-gradient(top,#000016 0,#002156 100%);
+                background: -o-linear-gradient(top,#000016 0,#002156 100%);
+                background: -ms-linear-gradient(top,#000016 0,#002156 100%);
+                background: linear-gradient(to bottom,#000016 0,#002156 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000016', endColorstr='#002156', GradientType=0);
             }
         </style>
         <main class="osb-geo-weather-holder">
-            <h2>Local Weather</h2>
-            <section>
+            <h2>Local Weather <i class="fa fa-refresh"></i></h2>
+            <section class="weather">
                 <article class="forecast-data">
                     <h3 class="today-weather">
-                        <span></span> <i></i> <span class="temp"></span>
+                        <span></span> <i></i> <span class="temp"></span><sup>&deg;</sup>
                     </h3>
-                    <h4 class="today-high-low"><span class="high"></span> | <span class="low"></span></h4>
-                    <p class="location">location: <span></span></p>
+                    <h4 class="today-high-low">
+                        High <i class="fa fa-chevron-up"></i>: <span class="high"></span><sup>&deg;</sup> |
+                        Low <i class="fa fa-chevron-down"></i>: <span class="low"></span><sup>&deg;</sup>
+                    </h4>
+                    <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>
                 </article>
                 <article>
                     <h3>Weather Forecast</h3>
+                    <ul class="forecast-list"></ul>
                 </article>
             </section>
             <section class="weather-loader">
                 <i class="icon"></i>
                 <p class="message"></p>
             </section>
+            <section class="background"></section>
         </main>
     `;
     class osbGeoWeather extends HTMLElement {
@@ -55,15 +88,15 @@
             // Get Selectors
             this.$holder = this.shadowRoot.querySelector('.osb-geo-weather-holder');
             this.$loader = this.shadowRoot.querySelector('.weather-loader');
-            this.$todayWeather = this.shadowRoot.querySelector('.today-weather span');
-            this.$todayTemp = this.shadowRoot.querySelector('.today-weather .temp');
             this.$location = this.shadowRoot.querySelector('.location span');
+            this.$todayWeather = this.shadowRoot.querySelector('.today-weather span');
+            this.$todayWeatherIcon = this.shadowRoot.querySelector('.today-weather i');
+            this.$todayTemp = this.shadowRoot.querySelector('.today-weather .temp');
+            this.$todayHighLow = this.shadowRoot.querySelector('.today-high-low');
             this.getLocation();
         };
 
-        attachedCallback() {
-
-        };
+        attachedCallback() {};
 
         attributeChangedCallback(attrName, oldVal, newVal) {
             console.log(attrName);
@@ -86,8 +119,12 @@
             this.$location.innerHTML = data.name;
             this.$todayWeather.innerHTML = data.weather[0].description;
             this.$todayTemp.innerHTML = data.main.temp;
+            var weatherIcon = this.getWeatherIcon(data.weather[0].description);
+            this.$todayWeatherIcon.setAttribute('class', weatherIcon);
+            this.$todayHighLow.querySelector('.high').innerHTML = data.main.temp_max;
+            this.$todayHighLow.querySelector('.low').innerHTML = data.main.temp_min;
         };
-
+        // Get location from device or default then get long/lat from Google Maps
         getLocation() {
             if ('geolocation' in navigator) {
                 console.log('Has geolocation');
@@ -117,7 +154,7 @@
                 console.log('No geolocation');
             }
         };
-
+        // Get Today's weather from openWeatherApi
         getTodayWeather(location) {
             console.log('Getting todays weather');
             var holder = this;
@@ -137,7 +174,7 @@
                     console.log('Failed');
                 });
         };
-
+        // Get Weather forecast from openWeatherApi
         getWeatherForecast(location) {
             var holder = this;
             fetch(this.weatherApiBase + 'forecast/daily?q=' + location + '&units=metric&APPID=' + this.weatherApiKey)
@@ -156,6 +193,120 @@
                     console.log('Failed');
                 });
         };
+        // Get correct icon class
+        getWeatherIcon(weather) {
+            switch(weather) {
+                case 'thunderstorm with light rain':
+                case 'thunderstorm with rain':
+                case 'thunderstorm with heavy rain':
+                    return 'wi wi-storm-showers';
+                    break;
+                case 'light thunderstorm':
+                case 'thunderstorm with light drizzle':
+                case 'thunderstorm with drizzle':
+                case 'thunderstorm with heavy drizzle':
+                    return 'wi wi-day-storm-showers';
+                    break;
+                case 'thunderstorm':
+                    return 'wi wi-day-thunderstorm';
+                    break;
+                case 'heavy thunderstorm':
+                case 'ragged thunderstorm':
+                    return 'wi wi-thunderstorm';
+                    break;
+                case 'light intensity drizzle':
+                    return 'wi wi-day-sprinkle';
+                    break;
+                case 'drizzle':
+                case 'light intensity shower rain':
+                    return 'wi wi-sprinkle';
+                    break;
+                case 'heavy intensity drizzle':
+                case 'light intensity drizzle rain':
+                case 'drizzle rain':
+                case 'shower drizzle':
+                case 'shower rain and drizzle':
+                case 'heavy intensity drizzle rain':
+                case 'heavy shower rain and drizzle':
+                case 'shower rain':
+                case 'heavy intensity shower rain':
+                    return 'wi wi-showers';
+                    break;
+                case 'light rain':
+                case 'moderate rain':
+                case 'ragged shower rain':
+                    return 'wi wi-rain-mix';
+                    break;
+                case 'heavy intensity rain':
+                case 'very heavy rain':
+                    return 'wi wi-rain';
+                    break;
+                case 'extreme rain':
+                    return 'wi wi-rain-wind';
+                    break;
+                case 'light snow':
+                case 'snow':
+                case 'heavy snow':
+                case 'light rain and snow':
+                case 'rain and snow':
+                    return 'wi wwi-snow';
+                    break;
+                case 'sleet':
+                case 'shower sleet':
+                case 'light shower snow':
+                case 'shower snow':
+                case 'heavy shower snow':
+                    return 'wi wwi-sleet';
+                    break;
+                case 'clear sky':
+                    return 'wi wi-day-sunny';
+                    break;
+                case 'few clouds':
+                case 'scattered clouds':
+                case 'broken clouds':
+                    return 'wi wi-day-cloudy';
+                    break;
+                case 'overcast clouds':
+                    return 'wi wi-cloudy';
+                    break;
+                case 'tornado':
+                    return 'wi wi-tornado';
+                    break;
+                case 'tropical storm':
+                    return 'wi wi-storm-showers';
+                    break;
+                case 'hurricane':
+                    return 'wi wi-hurricane';
+                    break;
+                case 'cold':
+                    return 'wi wi-snowflake-cold';
+                    break;
+                case 'hot':
+                    return 'wi wi-hot';
+                    break;
+                case 'windy':
+                    return 'wi wi-cloudy-windy';
+                    break;
+                case 'hail':
+                    return 'wi wi-hail';
+                    break;
+                case 'calm':
+                    return 'wi wi-day-sunny';
+                    break;
+                case 'light breeze':
+                case 'gentle breeze':
+                case 'moderate breeze':
+                case 'fresh breeze':
+                    return 'wi wi-windy';
+                    break;
+                case 'strong breeze':
+                    return 'wi wi-strong-wind';
+                    break;
+                default:
+                    return 'wi wi-day-sunny';
+                    break;
+            }
+        }
     }
     // Register Element
     document.registerElement('osb-geo-weather', osbGeoWeather);
