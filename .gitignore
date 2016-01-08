@@ -8,3 +8,4 @@ babel
 babel-external-helpers
 babel-node
 package.json
+/node_modules/webcomponents.js
