@@ -18,6 +18,8 @@
     "tests"
   ],
   "dependencies": {
-    "weather-icons": "~2.0.10"
+    "weather-icons": "~2.0.10",
+    "es6-promise": "~3.0.2",
+    "fetch": "~0.10.1"
   }
 }
