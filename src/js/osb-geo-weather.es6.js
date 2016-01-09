@@ -7,7 +7,7 @@
             @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
             @import url('/bower_components/weather-icons/css/weather-icons.css');
 
-            @import url('/css/osb-geo-weather.css');
+            @import url('/src/css/osb-geo-weather.css');
         </style>
         <main class="osb-geo-weather-holder">
             <h2>Local Weather <i class="fa fa-refresh"></i></h2>

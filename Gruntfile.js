@@ -9,13 +9,13 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'css/osb-geo-weather.css': 'scss/osb-geo-weather.scss'
+                    'src/css/osb-geo-weather.css': 'src/scss/osb-geo-weather.scss'
                 }
             }
         },
         watch: {
             scripts: {
-                files: ['scss/**/*.scss'],
+                files: ['src/scss/**/*.scss'],
                 tasks: ['sass'],
                 options: {
                     spawn: false
