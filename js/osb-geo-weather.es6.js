@@ -21,7 +21,7 @@
                         <i class="fa fa-chevron-down"></i> Low: <span class="low"></span><sup>&deg;</sup>
                     </h4>
                     <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>
-                    <p class="sunrise-sunset">
+                    <p class="today-sunrise-sunset">
                         <i class="wi wi-sunrise"></i> Sunrise: <span class="sunrise"></span> |
                         <i class="wi wi-sunset"></i> Sunset: <span class="sunset"></span>
                     </p>
@@ -35,7 +35,7 @@
                 <i class="icon"></i>
                 <p class="message"></p>
             </section>
-            <section class="background"></section>
+            <section class="background defaultBg"></section>
         </main>
     `;
     class osbGeoWeather extends HTMLElement {
@@ -54,6 +54,7 @@
             this.$todayWeatherIcon = this.shadowRoot.querySelector('.today-weather i');
             this.$todayTemp = this.shadowRoot.querySelector('.today-weather .temp');
             this.$todayHighLow = this.shadowRoot.querySelector('.today-high-low');
+            this.$todaySunriseSunset = this.shadowRoot.querySelector('.today-sunrise-sunset');
 
             this.$forecastListHolder = this.shadowRoot.querySelector('.forecast-list');
 
@@ -90,6 +91,14 @@
             this.$todayWeatherIcon.setAttribute('class', weatherIcon);
             this.$todayHighLow.querySelector('.high').innerHTML = data.main.temp_max;
             this.$todayHighLow.querySelector('.low').innerHTML = data.main.temp_min;
+            var sunrise = new Date(data.sys.sunrise * 1000);
+            console.log(sunrise);
+            console.log(sunrise.getHours() + ' : ' + sunrise.getMinutes());
+            var sunset = new Date(data.sys.sunset * 1000);
+            console.log(sunset);
+            console.log(sunset.getHours() + ' : ' + sunset.getMinutes());
+            /*this.$todaySunriseSunset.querySelector('.sunrise').innerHTML = new Date(data.sys.sunrise).getTime();
+            this.$todaySunriseSunset.querySelector('.sunset').innerHTML = new Date(data.sys.sunset).getTime();*/
         };
 
         updateForecastTemplate(data) {
