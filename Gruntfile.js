@@ -12,11 +12,21 @@ module.exports = function(grunt) {
                     'css/osb-geo-weather.css': 'scss/osb-geo-weather.scss'
                 }
             }
+        },
+        watch: {
+            scripts: {
+                files: ['scss/**/*.scss'],
+                tasks: ['sass'],
+                options: {
+                    spawn: false
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-serve');
     grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
     grunt.registerTask('default', ['serve']);
