@@ -91,7 +91,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
             value: function updateForecastTemplate(data) {
                 var templateHolder = this.$forecastListHolder;
                 data.list.forEach(function (element, index, array) {
-                    var date = new Date(element.dt);
+                    var date = new Date(element.dt * 1000);
                     templateHolder.innerHTML += '<li><h3>' + date.toDateString().slice(0, 3) + ' ' + date.getDate() + ' ' + date.toDateString().slice(4, 7) + '</h3><h4>' + element.weather[0].description + ' <i class="wi wi-owm-' + element.weather[0].id + '"></i></h4></li>';
                 });
             }

@@ -106,7 +106,7 @@
         updateForecastTemplate(data) {
             var templateHolder = this.$forecastListHolder;
             data.list.forEach(function(element, index, array) {
-                var date = new Date(element.dt);
+                var date = new Date(element.dt * 1000);
                 templateHolder.innerHTML +=
                     '<li><h3>' +
                     date.toDateString().slice(0, 3) + ' ' +
