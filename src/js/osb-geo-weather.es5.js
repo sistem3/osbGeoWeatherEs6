@@ -92,7 +92,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
                 var templateHolder = this.$forecastListHolder;
                 data.list.forEach(function (element, index, array) {
                     var date = new Date(element.dt * 1000);
-                    templateHolder.innerHTML += '<li><h3>' + date.toDateString().slice(0, 3) + ' ' + date.getDate() + ' ' + date.toDateString().slice(4, 7) + '</h3><h4>' + element.weather[0].description + ' <i class="wi wi-owm-' + element.weather[0].id + '"></i></h4></li>';
+                    templateHolder.innerHTML += '<li><h3>' + date.toDateString().slice(0, 3) + ' ' + date.getDate() + ' ' + date.toDateString().slice(4, 7) + '</h3><h4>' + element.weather[0].description + ' <i class="wi wi-owm-' + element.weather[0].id + '"></i></h4><p><i class="fa fa-chevron-up"></i> High: ' + element.temp.max + '</p><p><i class="fa fa-chevron-down"></i> Low: ' + element.temp.min + '</p></li>';
                 });
             }
         }, {

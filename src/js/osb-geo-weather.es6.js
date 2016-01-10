@@ -82,6 +82,16 @@
             }
         };
 
+        static parseTime(time) {
+            var amPm = 'AM';
+            var timeDate = new Date(time * 1000);
+            if (timeDate.getHours() > 11) {
+                amPm = 'PM';
+            }
+            return ('0' + timeDate.getHours()).slice(-2) + ':' +
+                ('0' + timeDate.getMinutes()).slice(-2) + ' ' + amPm;
+        };
+
         updateWeatherTemplate(data) {
             this.$location.innerHTML = data.name;
             this.$todayWeather.innerHTML = data.weather[0].description;
@@ -93,16 +103,6 @@
             this.$todaySunriseSunset.querySelector('.sunset').innerHTML = osbGeoWeather.parseTime(data.sys.sunset);
         };
 
-        static parseTime(time) {
-            var amPm = 'AM';
-            var timeDate = new Date(time * 1000);
-            if (timeDate.getHours() > 11) {
-                amPm = 'PM';
-            }
-            return ('0' + timeDate.getHours()).slice(-2) + ':' +
-                    ('0' + timeDate.getMinutes()).slice(-2) + ' ' + amPm;
-        };
-
         updateForecastTemplate(data) {
             var templateHolder = this.$forecastListHolder;
             data.list.forEach(function(element, index, array) {
@@ -112,7 +112,10 @@
                     date.toDateString().slice(0, 3) + ' ' +
                     date.getDate() + ' ' +
                     date.toDateString().slice(4, 7) + '</h3><h4>' +
-                    element.weather[0].description + ' <i class="wi wi-owm-' + element.weather[0].id + '"></i></h4></li>';
+                    element.weather[0].description + ' <i class="wi wi-owm-' + element.weather[0].id +
+                    '"></i></h4><p><i class="fa fa-chevron-up"></i> High: ' + element.temp.max +
+                    '</p><p><i class="fa fa-chevron-down"></i> Low: ' + element.temp.min +
+                    '</p></li>';
             });
         };
         // Get location from device or default then get long/lat from Google Maps
