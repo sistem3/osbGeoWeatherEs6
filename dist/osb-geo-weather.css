@@ -1,0 +1,114 @@
+.osb-geo-weather-holder {
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box; }
+  .osb-geo-weather-holder .weather {
+    position: relative;
+    z-index: 2; }
+
+.osb-geo-weather-holder .background {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.osb-geo-weather-holder .defaultBg {
+  background: #00b7ea;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #00b7ea 0%, #0074b2 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00b7ea), color-stop(100%, #0074b2));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #00b7ea 0%, #0074b2 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #00b7ea 0%, #0074b2 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #00b7ea 0%, #0074b2 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #00b7ea 0%, #0074b2 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$cerulean', endColorstr='$deep-cerulean', GradientType=0);
+  /* IE6-9 */ }
+
+.osb-geo-weather-holder .nightBg {
+  background: #000016;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #000016 0%, #002156 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000016), color-stop(100%, #002156));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #000016 0%, #002156 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #000016 0%, #002156 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #000016 0%, #002156 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #000016 0%, #002156 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$black-russian', endColorstr='$prussian-blue', GradientType=0);
+  /* IE6-9 */ }
+
+.osb-geo-weather-holder .rainyBg {
+  background: #b5bdc8;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #b5bdc8 0%, #828c95 36%, #28343b 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b5bdc8), color-stop(36%, #828c95), color-stop(100%, #28343b));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #b5bdc8 0%, #828c95 36%, #28343b 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #b5bdc8 0%, #828c95 36%, #28343b 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #b5bdc8 0%, #828c95 36%, #28343b 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #b5bdc8 0%, #828c95 36%, #28343b 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$cadet-blue', endColorstr='$outer-space', GradientType=0);
+  /* IE6-9 */ }
+
+.osb-geo-weather-holder h1, .osb-geo-weather-holder h2, .osb-geo-weather-holder h3, .osb-geo-weather-holder h4, .osb-geo-weather-holder h5, .osb-geo-weather-holder p, .osb-geo-weather-holder span {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: #FFF; }
+
+.osb-geo-weather-holder h2 {
+  margin-top: 0;
+  position: relative;
+  z-index: 2; }
+
+.osb-geo-weather-holder h3 {
+  margin-bottom: 0; }
+
+.osb-geo-weather-holder h4 {
+  margin-top: 10px;
+  margin-bottom: 5px; }
+
+.osb-geo-weather-holder .today-weather, .osb-geo-weather-holder .location {
+  text-transform: capitalize; }
+
+.osb-geo-weather-holder .forecast-list {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.osb-geo-weather-holder .forecast-list li {
+  width: 25%;
+  display: inline-block;
+  text-transform: capitalize; }
+  @media (max-width: 380px) {
+    .osb-geo-weather-holder .forecast-list li {
+      width: 100%; } }
+  @media (min-width: 380px) and (max-width: 650px) {
+    .osb-geo-weather-holder .forecast-list li {
+      width: 50%; } }
+  @media (min-width: 651px) and (max-width: 990px) {
+    .osb-geo-weather-holder .forecast-list li {
+      width: 33.33333%; } }
+
+.osb-geo-weather-holder .forecast-list li:last-child {
+  border-right: 0;
+  border-bottom: 0; }
+
+/*# sourceMappingURL=osb-geo-weather.css.map */
