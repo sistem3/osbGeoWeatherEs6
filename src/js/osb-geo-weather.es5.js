@@ -17,7 +17,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
     var osbGeoWeather = _temporalUndefined;
 
     // Register Element
-    template = '\n        <style>\n            @import url(\'https://fonts.googleapis.com/css?family=Roboto:400,300\');\n            @import url(\'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css\');\n            @import url(\'/bower_components/weather-icons/css/weather-icons.css\');\n\n            @import url(\'/css/osb-geo-weather.css\');\n        </style>\n        <main class="osb-geo-weather-holder">\n            <h2>Local Weather <i class="fa fa-refresh"></i></h2>\n            <section class="weather">\n                <article class="forecast-data">\n                    <h3 class="today-weather">\n                        <span></span> <i></i> <span class="temp"></span><sup>&deg;</sup>\n                    </h3>\n                    <h4 class="today-high-low">\n                        <i class="fa fa-chevron-up"></i> High: <span class="high"></span><sup>&deg;</sup> |\n                        <i class="fa fa-chevron-down"></i> Low: <span class="low"></span><sup>&deg;</sup>\n                    </h4>\n                    <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>\n                    <p class="sunrise-sunset">\n                        <i class="wi wi-sunrise"></i> Sunrise: <span class="sunrise"></span> |\n                        <i class="wi wi-sunset"></i> Sunset: <span class="sunset"></span>\n                    </p>\n                </article>\n                <article>\n                    <h3><i class="fa fa-calendar"></i> Weather Forecast <i class="fa fa-chevron-up"></i></h3>\n                    <ul class="forecast-list"></ul>\n                </article>\n            </section>\n            <section class="weather-loader">\n                <i class="icon"></i>\n                <p class="message"></p>\n            </section>\n            <section class="background"></section>\n        </main>\n    ';
+    template = '\n        <style>\n            @import url(\'https://fonts.googleapis.com/css?family=Roboto:400,300\');\n            @import url(\'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css\');\n            @import url(\'/bower_components/weather-icons/css/weather-icons.css\');\n\n            @import url(\'/src/css/osb-geo-weather.css\');\n        </style>\n        <main class="osb-geo-weather-holder">\n            <h2>Local Weather <i class="fa fa-refresh"></i></h2>\n            <section class="weather">\n                <article class="forecast-data">\n                    <h3 class="today-weather">\n                        <span class="title"></span> <span class="icon"></span> <span class="temp"></span><sup>&deg;</sup>\n                    </h3>\n                    <h4 class="today-high-low">\n                        <i class="fa fa-chevron-up"></i> High: <span class="high"></span><sup>&deg;</sup> |\n                        <i class="fa fa-chevron-down"></i> Low: <span class="low"></span><sup>&deg;</sup>\n                    </h4>\n                    <p class="location">Location <i class="fa fa-map-marker"></i>: <span></span></p>\n                    <p class="today-sunrise-sunset">\n                        <i class="wi wi-sunrise"></i> Sunrise: <span class="sunrise"></span> |\n                        <i class="wi wi-sunset"></i> Sunset: <span class="sunset"></span>\n                    </p>\n                </article>\n                <article>\n                    <h3><i class="fa fa-calendar"></i> Weather Forecast <i class="fa fa-chevron-up"></i></h3>\n                    <ul class="forecast-list"></ul>\n                </article>\n            </section>\n            <section class="weather-loader">\n                <i class="icon"></i>\n                <p class="message"></p>\n            </section>\n            <section class="background defaultBg"></section>\n        </main>\n    ';
 
     osbGeoWeather = (function (_HTMLElement) {
         _inherits(_temporalAssertDefined(osbGeoWeather, 'osbGeoWeather', _temporalUndefined) && osbGeoWeather, _HTMLElement);
@@ -41,10 +41,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
                 this.$loader = this.shadowRoot.querySelector('.weather-loader');
                 this.$location = this.shadowRoot.querySelector('.location span');
 
-                this.$todayWeather = this.shadowRoot.querySelector('.today-weather span');
-                this.$todayWeatherIcon = this.shadowRoot.querySelector('.today-weather i');
+                this.$todayWeather = this.shadowRoot.querySelector('.today-weather .title');
+                this.$todayWeatherIcon = this.shadowRoot.querySelector('.today-weather .icon');
                 this.$todayTemp = this.shadowRoot.querySelector('.today-weather .temp');
                 this.$todayHighLow = this.shadowRoot.querySelector('.today-high-low');
+                this.$todaySunriseSunset = this.shadowRoot.querySelector('.today-sunrise-sunset');
 
                 this.$forecastListHolder = this.shadowRoot.querySelector('.forecast-list');
 
@@ -76,23 +77,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
         }, {
             key: 'updateWeatherTemplate',
             value: function updateWeatherTemplate(data) {
-                console.log(data);
                 this.$location.innerHTML = data.name;
                 this.$todayWeather.innerHTML = data.weather[0].description;
                 this.$todayTemp.innerHTML = data.main.temp;
-                var weatherIcon = this.getWeatherIcon(data.weather[0].description);
-                this.$todayWeatherIcon.setAttribute('class', weatherIcon);
+                this.$todayWeatherIcon.innerHTML = '<i class="wi wi-owm-' + data.weather[0].id + '"></i>';
                 this.$todayHighLow.querySelector('.high').innerHTML = data.main.temp_max;
                 this.$todayHighLow.querySelector('.low').innerHTML = data.main.temp_min;
+                this.$todaySunriseSunset.querySelector('.sunrise').innerHTML = (_temporalAssertDefined(osbGeoWeather, 'osbGeoWeather', _temporalUndefined) && osbGeoWeather).parseTime(data.sys.sunrise);
+                this.$todaySunriseSunset.querySelector('.sunset').innerHTML = (_temporalAssertDefined(osbGeoWeather, 'osbGeoWeather', _temporalUndefined) && osbGeoWeather).parseTime(data.sys.sunset);
             }
         }, {
             key: 'updateForecastTemplate',
             value: function updateForecastTemplate(data) {
-                console.log(data);
                 var templateHolder = this.$forecastListHolder;
                 data.list.forEach(function (element, index, array) {
                     var date = new Date(element.dt);
-                    templateHolder.innerHTML += '<li><h3>' + date.toDateString().slice(0, 3) + ' ' + date.getDate() + ' ' + date.toDateString().slice(4, 7) + '</h3><h4>' + element.weather[0].description + ' <i class="' + (_temporalAssertDefined(osbGeoWeather, 'osbGeoWeather', _temporalUndefined) && osbGeoWeather).prototype.getWeatherIcon(element.weather[0].description) + '"></i></h4></li>';
+                    templateHolder.innerHTML += '<li><h3>' + date.toDateString().slice(0, 3) + ' ' + date.getDate() + ' ' + date.toDateString().slice(4, 7) + '</h3><h4>' + element.weather[0].description + ' <i class="wi wi-owm-' + element.weather[0].id + '"></i></h4></li>';
                 });
             }
         }, {
@@ -167,122 +167,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
                     console.log('Failed');
                 });
             }
-        }, {
-            key: 'getWeatherIcon',
-
-            // Get correct icon class
-            value: function getWeatherIcon(weather) {
-                switch (weather) {
-                    case 'thunderstorm with light rain':
-                    case 'thunderstorm with rain':
-                    case 'thunderstorm with heavy rain':
-                        return 'wi wi-storm-showers';
-                        break;
-                    case 'light thunderstorm':
-                    case 'thunderstorm with light drizzle':
-                    case 'thunderstorm with drizzle':
-                    case 'thunderstorm with heavy drizzle':
-                        return 'wi wi-day-storm-showers';
-                        break;
-                    case 'thunderstorm':
-                        return 'wi wi-day-thunderstorm';
-                        break;
-                    case 'heavy thunderstorm':
-                    case 'ragged thunderstorm':
-                        return 'wi wi-thunderstorm';
-                        break;
-                    case 'light intensity drizzle':
-                        return 'wi wi-day-sprinkle';
-                        break;
-                    case 'drizzle':
-                    case 'light intensity shower rain':
-                        return 'wi wi-sprinkle';
-                        break;
-                    case 'heavy intensity drizzle':
-                    case 'light intensity drizzle rain':
-                    case 'drizzle rain':
-                    case 'shower drizzle':
-                    case 'shower rain and drizzle':
-                    case 'heavy intensity drizzle rain':
-                    case 'heavy shower rain and drizzle':
-                    case 'shower rain':
-                    case 'heavy intensity shower rain':
-                        return 'wi wi-showers';
-                        break;
-                    case 'light rain':
-                    case 'moderate rain':
-                    case 'ragged shower rain':
-                        return 'wi wi-rain-mix';
-                        break;
-                    case 'heavy intensity rain':
-                    case 'very heavy rain':
-                        return 'wi wi-rain';
-                        break;
-                    case 'extreme rain':
-                        return 'wi wi-rain-wind';
-                        break;
-                    case 'light snow':
-                    case 'snow':
-                    case 'heavy snow':
-                    case 'light rain and snow':
-                    case 'rain and snow':
-                        return 'wi wwi-snow';
-                        break;
-                    case 'sleet':
-                    case 'shower sleet':
-                    case 'light shower snow':
-                    case 'shower snow':
-                    case 'heavy shower snow':
-                        return 'wi wwi-sleet';
-                        break;
-                    case 'clear sky':
-                        return 'wi wi-day-sunny';
-                        break;
-                    case 'few clouds':
-                    case 'scattered clouds':
-                    case 'broken clouds':
-                        return 'wi wi-day-cloudy';
-                        break;
-                    case 'overcast clouds':
-                        return 'wi wi-cloudy';
-                        break;
-                    case 'tornado':
-                        return 'wi wi-tornado';
-                        break;
-                    case 'tropical storm':
-                        return 'wi wi-storm-showers';
-                        break;
-                    case 'hurricane':
-                        return 'wi wi-hurricane';
-                        break;
-                    case 'cold':
-                        return 'wi wi-snowflake-cold';
-                        break;
-                    case 'hot':
-                        return 'wi wi-hot';
-                        break;
-                    case 'windy':
-                        return 'wi wi-cloudy-windy';
-                        break;
-                    case 'hail':
-                        return 'wi wi-hail';
-                        break;
-                    case 'calm':
-                        return 'wi wi-day-sunny';
-                        break;
-                    case 'light breeze':
-                    case 'gentle breeze':
-                    case 'moderate breeze':
-                    case 'fresh breeze':
-                        return 'wi wi-windy';
-                        break;
-                    case 'strong breeze':
-                        return 'wi wi-strong-wind';
-                        break;
-                    default:
-                        return 'wi wi-day-sunny';
-                        break;
+        }], [{
+            key: 'parseTime',
+            value: function parseTime(time) {
+                var amPm = 'AM';
+                var timeDate = new Date(time * 1000);
+                if (timeDate.getHours() > 11) {
+                    amPm = 'PM';
                 }
+                return ('0' + timeDate.getHours()).slice(-2) + ':' + ('0' + timeDate.getMinutes()).slice(-2) + ' ' + amPm;
             }
         }]);
 
