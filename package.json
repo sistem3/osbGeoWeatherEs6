@@ -1,6 +1,6 @@
 {
   "name": "osb-geo-weather",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "grunt-cli": "^0.1.13",
     "webcomponents.js": "^0.7.20"
