@@ -111,4 +111,15 @@
   border-right: 0;
   border-bottom: 0; }
 
+.osb-geo-weather-holder .weather-loader {
+  width: 120px;
+  min-height: 50px;
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  z-index: 2; }
+  .osb-geo-weather-holder .weather-loader i {
+    color: #FFF;
+    font-size: 50px; }
+
 /*# sourceMappingURL=osb-geo-weather.css.map */
