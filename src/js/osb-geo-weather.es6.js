@@ -11,8 +11,8 @@
         </style>
         <main class="osb-geo-weather-holder">
             <h2>Local Weather <i class="fa fa-refresh"></i></h2>
-            <section class="weather">
-                <article class="forecast-data">
+            <section>
+                <article class="weather forecast-data">
                     <h3 class="today-weather">
                         <span class="title"></span> <span class="icon"></span> <span class="temp"></span><sup>&deg;</sup>
                     </h3>
@@ -26,16 +26,16 @@
                         <i class="wi wi-sunset"></i> Sunset: <span class="sunset"></span>
                     </p>
                 </article>
-                <article>
+                <article class="weather">
                     <h3><i class="fa fa-calendar"></i> Weather Forecast <i class="fa fa-chevron-up"></i></h3>
                     <ul class="forecast-list"></ul>
                 </article>
+                <article class="weather-loader">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    <p class="message"></p>
+                </article>
+                <article class="background defaultBg"></article>
             </section>
-            <section class="weather-loader">
-                <i class="icon"></i>
-                <p class="message"></p>
-            </section>
-            <section class="background defaultBg"></section>
         </main>
     `;
     class osbGeoWeather extends HTMLElement {
